@@ -10,8 +10,17 @@ License: GPL2
 */
 
 register_activation_hook(__FILE__,'bands_install');
+
+//adds the taxonomies and custom page types
 add_action('init', 'add_band_types');
+
+//adds the meta boxes for custom fields
 add_action('add_meta_boxes', 'add_meta_boxes');
+
+// saves the custom fields
+add_action('save_post', 'bands_save_members_meta', 1, 2); 
+
+//http://www.webmaster-source.com/2010/01/08/using-the-wordpress-uploader-in-your-plugin-or-theme/
 
 global $bands_db_version;
 $bands_db_version = "1.0";
@@ -151,6 +160,4 @@ function bands_save_members_meta($post_id, $post) {
                 if(!$value) delete_post_meta($post->ID, $key); // Delete if blank
         } 
 }
-
-add_action('save_post', 'bands_save_members_meta', 1, 2); // save the custom fields
 ?>
