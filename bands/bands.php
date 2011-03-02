@@ -60,7 +60,7 @@ function add_meta_boxes(){
 }
 
 function social_links_html() {
-      global $post;
+    global $post;
 
     // Noncename needed to verify where the data originated
     echo '<input type="hidden" name="bands_membersmeta_noncename" id="bands_membersmeta_noncename" value="' .
@@ -90,13 +90,18 @@ function social_links_html() {
 }
 
 function images_html(){
+    global $post;
+
+	$logo_img = get_post_meta($post->ID, '_logo_img', true);
+	$pic_img = get_post_meta($post->ID, '_pic_img', true);
+	
 	echo '<p><label for="bands_upload_logo">Band Logo</label></p>';
-	echo '<input id="bands_upload_logo" type="text" size="36" name="bands_upload_logo" value="" />';
-	echo '<button id="bands_upload_logo_button" class="button-primary">Select Logo Image</button>';
+	echo '<input id="bands_upload_logo" type="hidden" size="36" name="_logo_img" value="' . $logo_img . '" />';
+	echo '<button id="bands_upload_logo_button" class="button">Select Logo Image</button>';
 	
 	echo '<p><label for="bands_upload_pic">Band Picture</label></p>';
-	echo '<input id="bands_upload_pic" type="text" size="36" name="bands_upload_pic" value="" />';
-	echo '<button id="bands_upload_pic_button" class="button-primary">Select Logo Pic</button>';
+	echo '<input id="bands_upload_pic" type="hidden" size="36" name="_pic_img" value="' . $pic_img . '" />';
+	echo '<button id="bands_upload_pic_button" class="button">Select Logo Pic</button>';
 }
 
 function bands_save_members_meta($post_id, $post) {
@@ -119,9 +124,9 @@ function bands_save_members_meta($post_id, $post) {
         $members_meta['_facebook'] = $_POST['_facebook'];
         $members_meta['_flickr'] = $_POST['_flickr'];
         $members_meta['_youtube'] = $_POST['_youtube'];
-        $members_meta['_wordpress'] = $_POST['_wordpress'];
         $members_meta['_myspace'] = $_POST['_myspace'];
-        $members_meta['_vetitleurl'] = $_POST['_vetitleurl'];
+        $members_meta['_pic_img'] = $_POST['_pic_img'];
+        $members_meta['_logo_img'] = $_POST['_logo_img'];
    
         // Add values of $members_meta as custom fields
  
@@ -147,5 +152,4 @@ function add_admin_scripts() {
 function add_admin_styles() {
 	wp_enqueue_style('thickbox');
 }
-
 ?>
