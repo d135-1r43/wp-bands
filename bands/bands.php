@@ -2,14 +2,12 @@
 /*
 Plugin Name: bands
 Plugin URI: http://URI_Of_Page_Describing_Plugin_and_Updates
-Description: "Bands" will generate a band portfolio for your festival, your agency or your network.
+Description: "Bands" will generate a band portfolio for your festival, your agency, your record label or your network.
 Version: 0.1
 Author: Markus Herhoffer
 Author URI: http://d135-1r43.de
 License: GPL2
 */
-
-register_activation_hook(__FILE__,'bands_install');
 
 //adds the taxonomies and custom page types
 add_action('init', 'add_band_types');
@@ -20,37 +18,11 @@ add_action('add_meta_boxes', 'add_meta_boxes');
 // saves the custom fields
 add_action('save_post', 'bands_save_members_meta', 1, 2); 
 
-//http://www.webmaster-source.com/2010/01/08/using-the-wordpress-uploader-in-your-plugin-or-theme/
+// add the JS we need in the admin menu
+add_action('admin_print_scripts', 'add_admin_scripts');
 
 global $bands_db_version;
 $bands_db_version = "1.0";
-
-function bands_install () {
-   global $wpdb;
-   global $band_db_version;
-
-   $table_name = $wpdb->prefix . "bands";
-   if($wpdb->get_var("show tables like '$table_name'") != $table_name) {
-      
-      $sql = "CREATE TABLE " . $table_name . " (
-	  id mediumint(9) NOT NULL AUTO_INCREMENT,
-	  time bigint(11) DEFAULT '0' NOT NULL,
-	  name tinytext NOT NULL,
-	  text text NOT NULL,
-	  website_url VARCHAR(55) NOT NULL,
-	  myspace_url VARCHAR(55) NOT NULL,
-	  facebook_page VARCHAR(55) NOT NULL,
-	  youtube_video_id VARCHAR(55) NOT NULL,
-	  UNIQUE KEY id (id)
-	);";
-
-      require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-      dbDelta($sql);
- 
-      add_option("band_db_version", $band_db_version);
-
-   }
-}
 
 function add_band_types () {
 
@@ -84,7 +56,7 @@ function add_band_types () {
 
 function add_meta_boxes(){
 	add_meta_box('bands_social_links', 'Social Links', 'social_links_html', 'bands', 'side');
-	add_meta_box('bands_images', 'Images', 'images_html', 'bands', 'side');
+	add_meta_box('bands_images', 'Images', 'images_html', 'bands', 'advanced');
 }
 
 function social_links_html() {
@@ -118,9 +90,13 @@ function social_links_html() {
 }
 
 function images_html(){
-	echo '<p><label for="upload_image">Band-Logo</label></p>';
-	echo '<input id="upload_image" type="text" size="36" name="upload_image" value="" />';
-	echo '<input id="upload_image_button" type="button" value="Upload Image" />';
+	echo '<p><label for="bands_upload_logo">Band Logo</label></p>';
+	echo '<input id="bands_upload_logo" type="text" size="36" name="bands_upload_logo" value="" />';
+	echo '<button id="bands_upload_logo_button" class="button-primary">Select Logo Image</button>';
+	
+	echo '<p><label for="bands_upload_pic">Band Picture</label></p>';
+	echo '<input id="bands_upload_pic" type="text" size="36" name="bands_upload_pic" value="" />';
+	echo '<button id="bands_upload_pic_button" class="button-primary">Select Logo Pic</button>';
 }
 
 function bands_save_members_meta($post_id, $post) {
@@ -160,4 +136,16 @@ function bands_save_members_meta($post_id, $post) {
                 if(!$value) delete_post_meta($post->ID, $key); // Delete if blank
         } 
 }
+
+function add_admin_scripts() {
+	wp_enqueue_script('media-upload');
+	wp_enqueue_script('thickbox');
+	wp_register_script('bands-uploader', WP_PLUGIN_URL.'/bands/bands-uploader.js', array('jquery','media-upload','thickbox'));
+	wp_enqueue_script('bands-uploader');
+}
+
+function add_admin_styles() {
+	wp_enqueue_style('thickbox');
+}
+
 ?>
