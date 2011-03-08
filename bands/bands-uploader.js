@@ -1,7 +1,7 @@
 var target;
 
 jQuery(document).ready(function() {
-	//jQuery('#media-buttons').hide();
+	jQuery('#media-buttons').hide();
 	
 	jQuery('#bands_upload_logo_button').click(function() {
 		target = jQuery('#bands_upload_logo')

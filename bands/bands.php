@@ -57,6 +57,7 @@ function add_band_types () {
 function add_meta_boxes(){
 	add_meta_box('bands_social_links', 'Social Links', 'social_links_html', 'bands', 'side');
 	add_meta_box('bands_images', 'Images', 'images_html', 'bands', 'advanced');
+	add_meta_box('bands_audio', 'Audio', 'audio_html', 'bands', 'advanced');
 }
 
 function social_links_html() {
@@ -102,6 +103,18 @@ function images_html(){
 	echo '<p><label for="bands_upload_pic">Band Picture</label></p>';
 	echo '<input id="bands_upload_pic" type="hidden" size="36" name="_pic_img" value="' . $pic_img . '" />';
 	echo '<button id="bands_upload_pic_button" class="button">Select Logo Pic</button>';
+}
+
+function audio_html(){
+    global $post;
+
+	$audio_url = get_post_meta($post->ID, '_audio_url', true);
+	$audio_title = get_post_meta($post->ID, '_audio_title', true);
+	
+	echo '<p><label for="bands_upload_audio_title">Audio Track Title</label></p>';
+	echo '<input id="bands_upload_audio_url" type="hidden" size="36" name="_audio_url" value="' . $audio_url . '" />';
+	echo '<input id="bands_upload_audio_title" type="text" size="36" name="_audio_title" value="' . $audio_url . '" />';
+	echo '<button id="bands_upload_audio_button" class="button">Select Audio Track</button>';
 }
 
 function bands_save_members_meta($post_id, $post) {
