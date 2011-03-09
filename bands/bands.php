@@ -25,9 +25,30 @@ global $bands_db_version;
 $bands_db_version = "1.0";
 
 function add_band_types () {
+	// category taxonomy
+	$labels = array(
+	    'name' => _x( 'Event', 'Event' ),
+	    'singular_name' => _x( 'Event', 'Event singular name' ),
+	    'search_items' =>  __( 'Search Events' ),
+	    'all_items' => __( 'All Events' ),
+	    'parent_item' => __( 'Parent Event' ),
+	    'parent_item_colon' => __( 'Parent Event:' ),
+	    'edit_item' => __( 'Edit Event' ), 
+	    'update_item' => __( 'Update Event' ),
+	    'add_new_item' => __( 'Add New Event' ),
+	    'new_item_name' => __( 'New Event Name' ),
+	    'menu_name' => __( 'Events' ),
+	  );
+	
+	register_taxonomy('event',array('bands'), array(
+    	'hierarchical' => true,
+    	'labels' => $labels,
+    	'show_ui' => true,
+    	'query_var' => true,
+    	'rewrite' => array( 'slug' => 'event' ),
+  	));
 
-	//register_taxonomy('bands-categories', 'bands', $args);
-
+	// post type for bands
 	$args = array(
 		'labels' => array(
 			'name' => __('Bands'),
@@ -49,7 +70,8 @@ function add_band_types () {
 	 	'show_in_menu' => true,
 	 	'menu_position'         => 20,
 	 	'supports'=> array('title', 'editor'),
-	    'rewrite' => array('slug' => 'bands')
+	    'rewrite' => array('slug' => 'bands'), 
+		'taxonomies' => array('event'),
 	);
 	register_post_type('bands', $args);
 }
