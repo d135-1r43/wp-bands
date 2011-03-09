@@ -111,10 +111,20 @@ function audio_html(){
 	$audio_url = get_post_meta($post->ID, '_audio_url', true);
 	$audio_title = get_post_meta($post->ID, '_audio_title', true);
 	
+	echo '<p id="bands_audio_track">No track uploaded</p>';
 	echo '<p><label for="bands_upload_audio_title">Audio Track Title</label></p>';
-	echo '<input id="bands_upload_audio_url" type="hidden" size="36" name="_audio_url" value="' . $audio_url . '" />';
-	echo '<input id="bands_upload_audio_title" type="text" size="36" name="_audio_title" value="' . $audio_url . '" />';
+	echo '<input id="bands_upload_audio_url" type="text" size="36" name="_audio_url" value="' . $audio_url . '" />';
+	echo '<input id="bands_upload_audio_title" type="text" size="36" name="_audio_title" value="' . $audio_title . '" />';
 	echo '<button id="bands_upload_audio_button" class="button">Select Audio Track</button>';
+}
+
+function player_html($id, $audio_url){
+	echo '<div class="player">';
+	echo '<p id="' . $id . '">Please install Flash player to play audio</p>';
+	echo '<script type="text/javascript">';
+	echo '	AudioPlayer.embed("' . $id . '", {soundFile: "' . $audio_url . '"});';  
+	echo '</script>';
+	echo '</div>';
 }
 
 function bands_save_members_meta($post_id, $post) {
@@ -140,6 +150,8 @@ function bands_save_members_meta($post_id, $post) {
         $members_meta['_myspace'] = $_POST['_myspace'];
         $members_meta['_pic_img'] = $_POST['_pic_img'];
         $members_meta['_logo_img'] = $_POST['_logo_img'];
+        $members_meta['_audio_url'] = $_POST['_audio_url'];
+        $members_meta['_audio_title'] = $_POST['_audio_title'];
    
         // Add values of $members_meta as custom fields
  
@@ -158,6 +170,13 @@ function bands_save_members_meta($post_id, $post) {
 function add_admin_scripts() {
 	wp_enqueue_script('media-upload');
 	wp_enqueue_script('thickbox');
+	
+	wp_register_script('audio-player', WP_PLUGIN_URL.'/bands/player/audio-player.js', array('jquery'));
+	wp_enqueue_script('audio-player');
+	
+	wp_register_script('audio-setup', WP_PLUGIN_URL.'/bands/audio-setup.js', array('audio-player'));
+	wp_enqueue_script('audio-setup');
+	
 	wp_register_script('bands-uploader', WP_PLUGIN_URL.'/bands/bands-uploader.js', array('jquery','media-upload','thickbox'));
 	wp_enqueue_script('bands-uploader');
 }
