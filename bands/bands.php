@@ -9,6 +9,8 @@ Author URI: http://d135-1r43.de
 License: GPL2
 */
 
+include 'template_tags.php';
+
 //adds the taxonomies and custom page types
 add_action('init', 'add_band_types');
 
@@ -113,53 +115,53 @@ function social_links_html() {
             wp_create_nonce( plugin_basename(__FILE__) ) . '" />';
 
     // Get the location data if its already been entered
-	$video_id = get_post_meta($post->ID, '_video_id', true);
-    $twitter = get_post_meta($post->ID, '_twitter', true);
-    $facebook = get_post_meta($post->ID, '_facebook', true);
-    $flickr = get_post_meta($post->ID, '_flickr', true);
-    $youtube = get_post_meta($post->ID, '_youtube', true);
-    $myspace = get_post_meta($post->ID, '_myspace', true);
+	$video_id = get_post_meta($post->ID, 'video_id', true);
+    $twitter = get_post_meta($post->ID, 'twitter', true);
+    $facebook = get_post_meta($post->ID, 'facebook', true);
+    $flickr = get_post_meta($post->ID, 'flickr', true);
+    $youtube = get_post_meta($post->ID, 'youtube', true);
+    $myspace = get_post_meta($post->ID, 'myspace', true);
 
     // Echo out the field
 	echo '<p>Music Video ID on YouTube</p>';
-    echo '<input type="text" name="_video_id" value="' . $video_id  . '" class="widefat" />';
+    echo '<input type="text" name="video_id" value="' . $video_id  . '" class="widefat" />';
     echo '<p>Twitter Username</p>';
-    echo '<input type="text" name="_twitter" value="' . $twitter  . '" class="widefat" />';
+    echo '<input type="text" name="twitter" value="' . $twitter  . '" class="widefat" />';
     echo '<p>FaceBook Username</p>';
-    echo '<input type="text" name="_facebook" value="' . $facebook  . '" class="widefat" />';
+    echo '<input type="text" name="facebook" value="' . $facebook  . '" class="widefat" />';
     echo '<p>Flickr Username</p>';
-    echo '<input type="text" name="_flickr" value="' . $flickr  . '" class="widefat" />';
+    echo '<input type="text" name="flickr" value="' . $flickr  . '" class="widefat" />';
     echo '<p>YouTube Username</p>';
-    echo '<input type="text" name="_youtube" value="' . $youtube  . '" class="widefat" />';
+    echo '<input type="text" name="youtube" value="' . $youtube  . '" class="widefat" />';
     echo '<p>MySpace Username</p>';
-    echo '<input type="text" name="_myspace" value="' . $myspace  . '" class="widefat" />'; 
+    echo '<input type="text" name="myspace" value="' . $myspace  . '" class="widefat" />'; 
 }
 
 function images_html(){
     global $post;
 
-	$logo_img = get_post_meta($post->ID, '_logo_img', true);
-	$pic_img = get_post_meta($post->ID, '_pic_img', true);
+	$logo_img = get_post_meta($post->ID, 'logo_img', true);
+	$pic_img = get_post_meta($post->ID, 'pic_img', true);
 	
 	echo '<p><label for="bands_upload_logo">Band Logo</label></p>';
-	echo '<input id="bands_upload_logo" type="hidden" size="36" name="_logo_img" value="' . $logo_img . '" />';
+	echo '<input id="bands_upload_logo" type="hidden" size="36" name="logo_img" value="' . $logo_img . '" />';
 	echo '<button id="bands_upload_logo_button" class="button">Select Logo Image</button>';
 	
 	echo '<p><label for="bands_upload_pic">Band Picture</label></p>';
-	echo '<input id="bands_upload_pic" type="hidden" size="36" name="_pic_img" value="' . $pic_img . '" />';
+	echo '<input id="bands_upload_pic" type="hidden" size="36" name="pic_img" value="' . $pic_img . '" />';
 	echo '<button id="bands_upload_pic_button" class="button">Select Logo Pic</button>';
 }
 
 function audio_html(){
     global $post;
 
-	$audio_url = get_post_meta($post->ID, '_audio_url', true);
-	$audio_title = get_post_meta($post->ID, '_audio_title', true);
+	$audio_url = get_post_meta($post->ID, 'audio_url', true);
+	$audio_title = get_post_meta($post->ID, 'audio_title', true);
 	
 	echo '<p id="bands_audio_track">No track uploaded</p>';
 	echo '<p><label for="bands_upload_audio_title">Audio Track Title</label></p>';
-	echo '<input id="bands_upload_audio_url" type="text" size="36" name="_audio_url" value="' . $audio_url . '" />';
-	echo '<input id="bands_upload_audio_title" type="text" size="36" name="_audio_title" value="' . $audio_title . '" />';
+	echo '<input id="bands_upload_audio_url" type="text" size="36" name="audio_url" value="' . $audio_url . '" />';
+	echo '<input id="bands_upload_audio_title" type="text" size="36" name="audio_title" value="' . $audio_title . '" />';
 	echo '<button id="bands_upload_audio_button" class="button">Select Audio Track</button>';
 }
 
@@ -187,16 +189,16 @@ function bands_save_members_meta($post_id, $post) {
         // OK, we're authenticated: we need to find and save the data
         // We'll put it into an array to make it easier to loop though.
  
-        $members_meta['_video_id'] = $_POST['_video_id'];
-		$members_meta['_twitter'] = $_POST['_twitter'];
-        $members_meta['_facebook'] = $_POST['_facebook'];
-        $members_meta['_flickr'] = $_POST['_flickr'];
-        $members_meta['_youtube'] = $_POST['_youtube'];
-        $members_meta['_myspace'] = $_POST['_myspace'];
-        $members_meta['_pic_img'] = $_POST['_pic_img'];
-        $members_meta['_logo_img'] = $_POST['_logo_img'];
-        $members_meta['_audio_url'] = $_POST['_audio_url'];
-        $members_meta['_audio_title'] = $_POST['_audio_title'];
+        $members_meta['video_id'] = $_POST['video_id'];
+		$members_meta['twitter'] = $_POST['twitter'];
+        $members_meta['facebook'] = $_POST['facebook'];
+        $members_meta['flickr'] = $_POST['flickr'];
+        $members_meta['youtube'] = $_POST['youtube'];
+        $members_meta['myspace'] = $_POST['myspace'];
+        $members_meta['pic_img'] = $_POST['pic_img'];
+        $members_meta['logo_img'] = $_POST['logo_img'];
+        $members_meta['audio_url'] = $_POST['audio_url'];
+        $members_meta['audio_title'] = $_POST['audio_title'];
    
         // Add values of $members_meta as custom fields
  
