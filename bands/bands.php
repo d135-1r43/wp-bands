@@ -23,6 +23,10 @@ add_action('save_post', 'bands_save_members_meta', 1, 2);
 // add the JS we need in the admin menu
 add_action('admin_print_scripts', 'add_admin_scripts');
 
+// add the JS we need for the frontend
+add_action('wp_print_scripts', 'add_admin_scripts');
+
+
 global $bands_db_version;
 $bands_db_version = "1.0";
 
@@ -160,7 +164,7 @@ function audio_html(){
 	
 	echo '<p id="bands_audio_track">No track uploaded</p>';
 	echo '<p><label for="bands_upload_audio_title">Audio Track Title</label></p>';
-	echo '<input id="bands_upload_audio_url" type="text" size="36" name="audio_url" value="' . $audio_url . '" />';
+	echo '<input id="bands_upload_audio_url" type="hidden" size="36" name="audio_url" value="' . $audio_url . '" />';
 	echo '<input id="bands_upload_audio_title" type="text" size="36" name="audio_title" value="' . $audio_title . '" />';
 	echo '<button id="bands_upload_audio_button" class="button">Select Audio Track</button>';
 }

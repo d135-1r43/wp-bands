@@ -7,6 +7,16 @@ jQuery(document).ready(function() {
 		AudioPlayer.embed("bands_audio_track", {soundFile: audio_url, titles: title});  
 	}
 	
+	logo_url =  jQuery('#bands_upload_logo').val();
+	if (logo_url != ""){
+		jQuery('<p><img src="' + logo_url + '" alt="img" /></p>').insertBefore(jQuery('#bands_upload_logo'));
+	}
+	
+	picture_url = jQuery('#bands_upload_pic').val();
+	if (picture_url != ""){
+		jQuery('<p><img src="' + picture_url + '" alt="img" /></p>').insertBefore(jQuery('#bands_upload_logo'));
+	}	
+	
 	jQuery('#media-buttons').hide();
 	
 	jQuery('#bands_upload_logo_button').click(function() {
