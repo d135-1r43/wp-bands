@@ -4,12 +4,13 @@
 	<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 	
 	<div class="post" id="post-<?php the_ID(); ?>">
-		Meta-Loop:
-		<?php the_meta(); ?>
-		
 		<div class="entry">
 			<h2><img src="<?php the_logo_url(); ?>" alt="<?php the_title(); ?>"/></h2>
-			<p class="bandinfo"><?php the_genres(); ?></p>
+			
+			<div class="bandinfo">
+				<p><?php the_genres(); ?></p>
+				<p><?php the_country(); ?></p>
+			</div>
 			
 			<div class="socialmedia">
 				<h4><?php the_title(); ?> in the Social Web</h4>

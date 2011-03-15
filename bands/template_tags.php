@@ -18,6 +18,11 @@ function the_genres () {
 	echo the_terms($post->ID, 'genre', '', ', ', ' ' );
 }
 
+function the_country () {
+	global $post;
+	echo the_terms($post->ID, 'country', '', ', ', ' ' );
+}
+
 function the_band_image_url () {
 	global $post;
 	echo get_post_meta($post->ID, 'pic_img', true);

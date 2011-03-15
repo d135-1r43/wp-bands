@@ -76,6 +76,29 @@ function add_band_types () {
 	    'query_var' => true,
 	    'rewrite' => array( 'slug' => 'genre' ),
 	  ));
+	
+	// country taxonomy
+	$labels = array(
+	    'name' => _x( 'Country', 'taxonomy general name' ),
+	    'singular_name' => _x( 'Country', 'taxonomy singular name' ),
+	    'search_items' =>  __( 'Search Countries' ),
+	    'all_items' => __( 'All Countries' ),
+	    'parent_item' => __( 'Parent Country' ),
+	    'parent_item_colon' => __( 'Parent Country:' ),
+	    'edit_item' => __( 'Edit Country' ), 
+	    'update_item' => __( 'Update Country' ),
+	    'add_new_item' => __( 'Add New Country' ),
+	    'new_item_name' => __( 'New Country Name' ),
+	    'menu_name' => __( 'Countries' ),
+	  ); 	
+
+	  register_taxonomy('country',array('bands'), array(
+	    'hierarchical' => false,
+	    'labels' => $labels,
+	    'show_ui' => true,
+	    'query_var' => true,
+	    'rewrite' => array( 'slug' => 'country' ),
+	  ));
 
 	// post type for bands
 	$args = array(
