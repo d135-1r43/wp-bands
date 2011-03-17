@@ -15,12 +15,12 @@ function the_logo_url () {
 
 function the_genres () {
 	global $post;
-	echo the_terms($post->ID, 'genre', '', ', ', ' ' );
+	echo the_terms($post->ID, 'genre', '', ', ', '' );
 }
 
 function the_country () {
 	global $post;
-	echo the_terms($post->ID, 'country', '', ', ', ' ' );
+	echo the_terms($post->ID, 'country', '', ', ', '' );
 }
 
 function the_band_image_url () {
